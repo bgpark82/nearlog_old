@@ -4,15 +4,15 @@ import java.time.LocalDateTime;
 
 public interface Response<T> {
 
-    static <T> Response<T> of(String code, T data) {
-        return new TypeResponse<>(code, data);
+    static <T> Response<T> of(int status, T data) {
+        return new TypeResponse<>(status, data);
     }
 
     static <T> Response<T> of(T data) {
-        return  new TypeResponse<>("200", data);
+        return new TypeResponse<>(200, data);
     }
 
-    String getStatus();
+    int getStatus();
 
     T getData();
 

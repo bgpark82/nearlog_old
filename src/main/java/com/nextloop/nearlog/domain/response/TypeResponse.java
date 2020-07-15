@@ -4,18 +4,18 @@ import java.time.LocalDateTime;
 
 public class TypeResponse<T> implements Response<T> {
 
-    private String status;
-    private T data;
-    private LocalDateTime timestamp;
+     int status;
+     T data;
+     LocalDateTime timestamp;
 
-    public TypeResponse(String status, T data) {
+    public TypeResponse(int status, T data) {
         this.status = status;
         this.data = data;
         this.timestamp = LocalDateTime.now();
     }
 
     @Override
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
@@ -28,5 +28,4 @@ public class TypeResponse<T> implements Response<T> {
     public LocalDateTime getTimestamp() {
         return timestamp = LocalDateTime.now();
     }
-
 }
