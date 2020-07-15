@@ -1,5 +1,6 @@
 package com.nextloop.nearlog.domain.user;
 
+import com.nextloop.nearlog.domain.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,17 +17,17 @@ public class UserController {
     private final UserRepository userRepository;
 
     @PostMapping("/user")
-    public User save() {
+    public Response<User> save() {
         User user = User.builder()
                     .username("bgpark")
                     .password("1234")
                     .build();
-        return userRepository.save(user);
+        return Response.of(userRepository.save(user));
     }
 
     @GetMapping("/user")
-    public List<User> findAll() {
-        return userRepository.findAll();
+    public Response<List<User>> findAll() {
+        return Response.of(userRepository.findAll());
     }
 
 }
