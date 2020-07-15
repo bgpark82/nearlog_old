@@ -1,5 +1,6 @@
 package com.nextloop.nearlog.domain.user;
 
+import com.nextloop.nearlog.domain.base.BaseTime;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User {
+public class User extends BaseTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
