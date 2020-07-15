@@ -1,2 +1,5 @@
 rootProject.name = 'nearlog'
 
+include 'api'
+include 'common'
+

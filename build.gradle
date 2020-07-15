@@ -11,38 +11,44 @@ buildscript {
 
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-group = 'com.nextloop'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+    group = 'com.nextloop'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        compile 'org.springframework.boot:spring-boot-starter-actuator'
+        compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+        compile 'org.springframework.boot:spring-boot-starter-web'
+        runtime 'com.h2database:h2'
+        compileOnly 'org.projectlombok:lombok'
+        testCompile 'org.springframework.boot:spring-boot-starter-test'
+
+        // h2 로그 파라미터 값
+        implementation "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.1"
+
+        // annotation processor
+        annotationProcessor('org.projectlombok:lombok')
+        testAnnotationProcessor('org.projectlombok:lombok')
+
+        // swagger2
+        implementation 'io.springfox:springfox-swagger2:2.9.2'
+        implementation 'io.springfox:springfox-swagger-ui:2.9.2'
+
+    }
 }
 
-
-
-dependencies {
-    compile 'org.springframework.boot:spring-boot-starter-actuator'
-    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    runtime 'com.h2database:h2'
-    compileOnly 'org.projectlombok:lombok'
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-
-    // h2 로그 파라미터 값
-    implementation "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.1"
-
-    // annotation processor
-    annotationProcessor('org.projectlombok:lombok')
-    testAnnotationProcessor('org.projectlombok:lombok')
-
-    // swagger2
-    implementation 'io.springfox:springfox-swagger2:2.9.2'
-    implementation 'io.springfox:springfox-swagger-ui:2.9.2'
-
+project(":api") {
+    dependencies {
+        compile project(':common')
+    }
 }
