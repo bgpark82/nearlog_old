@@ -15,9 +15,4 @@ public class ApiException extends RuntimeException {
     public int getStatus() {
         return errorCode.getStatus();
     }
-
-    @Override
-    public String getMessage() {
-        return super.getMessage();
-    }
 }
