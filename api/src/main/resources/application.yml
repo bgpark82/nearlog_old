@@ -23,6 +23,10 @@ spring.jpa.hibernate.ddl-auto: create             # 서버 시작에 테이블 �
 ---
 spring:
   profiles: dev
-
-server:
-  port: 8081
+  jpa:
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3306/nearlog
+    username: root
+    password: password
