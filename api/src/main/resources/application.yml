@@ -3,8 +3,7 @@ spring:
     active: local
 
 ---
-spring:
-  profiles: local
+spring.profiles: local
 
 # h2 설정
 spring.h2.console.enabled: true
@@ -21,13 +20,8 @@ spring.jpa.properties.hibernate.format_sql: true  # 압축된 쿼리를 읽기 �
 spring.jpa.hibernate.ddl-auto: create             # 서버 시작에 테이블 생성
 
 ---
-spring:
-  profiles: dev
-  jpa:
-    hibernate:
-      ddl-auto: update
-  datasource:
-    url: jdbc:mysql://localhost:3306/nearlog
-    username: root
-    password: password
-    driver-class-name: com.mysql.cj.jdbc.Driver
+spring.profiles: dev
+spring.profiles.include: db
+
+spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+

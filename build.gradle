@@ -45,8 +45,7 @@ subprojects {
         implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 
         // mysql
-        runtimeOnly 'mysql:mysql-connector-java'
-
+        compile 'org.mariadb.jdbc:mariadb-java-client'
 
     }
 }
