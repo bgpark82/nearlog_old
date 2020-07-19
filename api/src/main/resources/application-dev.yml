@@ -1,0 +1,4 @@
+spring.profiles: dev
+spring.profiles.include: db
+
+spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
