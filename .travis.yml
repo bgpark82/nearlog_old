@@ -20,7 +20,7 @@ deploy:
     bucket: letshadow-s3-deploy
     region: ap-northeast-2
     skip_cleanup: true
-    acl: public_read
+    acl: private
     wait-until-deployed: true
     on:
       repo: bgpark82/nearlog
