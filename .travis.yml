@@ -28,9 +28,9 @@ deploy:
     acl: private                                # 현재 public access가 차단된 상태
     local_dir: deploy
     wait-until-deployed: true
-    on:
-      repo: bgpark82/nearlog
-      branch: develop
+#    on:
+#      repo: bgpark82/nearlog
+#      branch: develop
 
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
