@@ -30,3 +30,4 @@ notifications:
   email:
     recipients:
       - bgpark82@gmail.com
+  slack: letshadow:xUzzJSHCl1mTVIPZSBYRJ0dd
