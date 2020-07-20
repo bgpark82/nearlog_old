@@ -14,7 +14,7 @@ cache:
 script: "./gradlew clean build"
 
 before_deploy:
-  - zip -r nearlog *
+  - zip -r nearlog *                            # travis 내부에서 / 디렉토리 파일들을 nearlog.zip으로 압축
   - mkdir -p deploy
   - mv nearlog.zip deploy/nearlog.zip
 
@@ -25,18 +25,23 @@ deploy:
     bucket: letshadow-s3-deploy
     region: ap-northeast-2
     skip_cleanup: true
-    acl: private                         # 현재 public access가 차단된 상태
+    acl: private                                # 현재 public access가 차단된 상태
     local_dir: deploy
     wait-until-deployed: true
     on:
       repo: bgpark82/nearlog
       branch: develop
+
   - provider: codedeploy
     access_key_id: $AWS_ACCESS_KEY
     secret_access_key: $AWS_SECRET_KEY
     bucket: letshadow-s3-deploy
+    key: nearlog.zip                            # 압축된 빌드 파일
+    build-type: zip                             # 압축 확장자
+    application: letshadow-codedeploy-service   # codedeploy에 등록된 어플리케이션
+    deployment_group: letshadow-deploy-group    # codedeploy에 등록된 deploy group
     region: ap-northeast-2
-    skip_cleanup: true
+    wait-until-developed: true
 
 notifications:
   email:
