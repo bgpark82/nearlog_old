@@ -37,11 +37,11 @@ deploy:
     secret_access_key: $AWS_SECRET_KEY
     bucket: letshadow-s3-deploy
     key: nearlog.zip                            # 압축된 빌드 파일
-    build-type: zip                             # 압축 확장자
+    bundle_type: zip                             # 압축 확장자
     application: letshadow-codedeploy-service   # codedeploy에 등록된 어플리케이션
     deployment_group: letshadow-deploy-group    # codedeploy에 등록된 deploy group
     region: ap-northeast-2
-    wait-until-developed: true
+    wait-until-deployed: true
 
 notifications:
   email:
