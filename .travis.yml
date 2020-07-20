@@ -29,4 +29,4 @@ deploy:
 notifications:
   email:
     recipients:
-      - bgpark82@gamail.com
+      - bgpark82@gmail.com
