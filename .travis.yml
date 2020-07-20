@@ -13,6 +13,19 @@ cache:
 
 script: "./gradlew clean build"
 
+deploy:
+  - provider: s3
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
+    bucket: letshadow-s3-deploy
+    region: ap-northeast-2
+    skip_cleanup: true
+    acl: public_read
+    wait-until-deployed: true
+    on:
+      repo: bgpark82/nearlog https://github.com/bgpark82/nearlog.git
+      branch: develop
+
 notifications:
   email:
     recipients:
