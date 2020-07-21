@@ -23,7 +23,7 @@ public class UserController {
     @PostMapping("/user")
     public Response<User> save() {
         User user = User.builder()
-                    .username("bgpark")
+                    .name("bgpark")
                     .password("1234")
                     .build();
         return Response.of(userRepository.save(user));

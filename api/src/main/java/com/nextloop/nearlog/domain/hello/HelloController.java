@@ -13,9 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(("/api/v1"))
 public class HelloController {
 
-    @ApiOperation(value = "에러 메세지", notes = "에러 메세지를 생성한다")
+    @ApiOperation(value = "hello 메세지", notes = "hello 메세지를 생성한다")
     @GetMapping
     public String hello() {
+        return "hello";
+    }
+
+    @ApiOperation(value = "에러 메세지", notes = "에러 메세지를 생성한다")
+    @GetMapping("/error")
+    public String error() {
         throw new ApiException(ErrorCode.SERVER_ERROR);
     }
+
 }
