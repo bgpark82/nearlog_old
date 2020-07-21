@@ -4,6 +4,7 @@ spring:
 
 ---
 spring.profiles: local
+spring.profiles.include: oauth
 
 # h2 설정
 spring.h2.console.enabled: true

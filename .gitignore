@@ -2,3 +2,4 @@
 .idea
 build
 application-db.yml
+application-oauth.yml
