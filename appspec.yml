@@ -1,6 +1,10 @@
 version: 0.0
 os: linux
 files:
-  - source: /             # codedeploy에서 전달한 파일 중 destination으로 이동할 대상
-    destination: /app/build    # source에서 지정된 파일을 받을 위치
+  - source: /                   # codedeploy에서 전달한 파일 중 destination으로 이동할 대상
+    destination: /app/build     # source에서 지정된 파일을 받을 위치
     override: yes
+hooks:
+  AfterInstall:
+    - location: execute-deploy.sh
+      timeout: 180
