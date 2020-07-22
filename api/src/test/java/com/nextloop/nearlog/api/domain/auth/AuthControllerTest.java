@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.HashMap;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -54,6 +56,9 @@ class AuthControllerTest {
 
     @Test
     void user_sign_in() throws Exception {
+        HashMap<String, String> token = new HashMap<>();
+        token.put("token","this is jwt token");
+        when(authService.signIn(any())).thenReturn(token);
 
         mvc.perform(post("/api/v1/signin")
                 .contentType(MediaType.APPLICATION_JSON)
