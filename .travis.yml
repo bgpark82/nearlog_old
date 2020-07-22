@@ -42,7 +42,6 @@ deploy:
     deployment_group: letshadow-deploy-group    # codedeploy에 등록된 deploy group
     region: ap-northeast-2
     wait-until-deployed: true
-    on:                                         # check if it needs on codedeploy
       repo: bgpark82/nearlog
       branch: develop
 
