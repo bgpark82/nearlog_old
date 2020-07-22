@@ -10,6 +10,7 @@ public class AuthDTO {
     @NoArgsConstructor
     @Getter
     public static class Response {
+
         private String token;
 
         public static AuthDTO.Response of(String token) {
