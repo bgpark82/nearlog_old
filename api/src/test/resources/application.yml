@@ -1,0 +1,2 @@
+jwtSecret: letshadow
+expiryHour: 30
