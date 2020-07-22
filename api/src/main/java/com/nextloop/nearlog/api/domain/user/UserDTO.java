@@ -26,4 +26,10 @@ public class UserDTO {
                     .build();
         }
     }
+
+    @Getter
+    public static class SignIn {
+        private String email;
+        private String password;
+    }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -14,6 +15,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AuthController.class)
@@ -25,6 +27,8 @@ class AuthControllerTest {
     private ObjectMapper mapper;
     @MockBean
     private CustomUserDetailsService detailsService;
+    @MockBean
+    private AuthenticationManager authenticationManager;
     @MockBean
     private AuthService authService;
 
@@ -48,5 +52,15 @@ class AuthControllerTest {
         verify(authService).save(any());
     }
 
+    @Test
+    void user_sign_in() throws Exception {
 
+        mvc.perform(post("/api/v1/signin")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"bgpark82@gmail.com\", \"password\":\"1234\"}"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.token").exists())
+        ;
+    }
 }
