@@ -4,10 +4,7 @@ import com.nextloop.nearlog.domain.response.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,11 +18,7 @@ public class UserController {
 
     @ApiOperation(value = "회원 저장")
     @PostMapping("/user")
-    public Response<User> save() {
-        User user = User.builder()
-                    .username("bgpark")
-                    .password("1234")
-                    .build();
+    public Response<User> save(@RequestBody User user) {
         return Response.of(userRepository.save(user));
     }
 

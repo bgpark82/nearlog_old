@@ -18,4 +18,5 @@ public class HelloController {
     public String hello() {
         throw new ApiException(ErrorCode.SERVER_ERROR);
     }
+
 }
