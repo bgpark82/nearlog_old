@@ -44,6 +44,7 @@ public class AuthService {
         } catch(RuntimeException e) {
             throw new ApiException(ErrorCode.UNAUTHENTICATED);
         }
+        // TODO : JWT 생성
         Map<String, String> map = new HashMap<>();
         map.put("token","this is jwt token");
         return map;
