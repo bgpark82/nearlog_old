@@ -2,6 +2,7 @@ package com.nextloop.nearlog.api.domain.user;
 
 import com.nextloop.nearlog.api.domain.base.BaseTime;
 import lombok.*;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,8 +28,10 @@ public class User extends BaseTime {
     @Size(max=100)
     private String password;
 
+    // email로 SecurityContext 검증
     @NotBlank
     @Email
+    @Column(unique = true)
     private String email;
 
     private String profile;
