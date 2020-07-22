@@ -24,9 +24,8 @@ public class AuthController {
     }
 
     @PostMapping("/signin")
-    public Response<Map> signIn(@RequestBody UserDTO.SignIn user) {
+    public Response<AuthDTO.Response> signIn(@RequestBody UserDTO.SignIn user) {
         return Response.of(authService.signIn(user));
-
     }
 
 }

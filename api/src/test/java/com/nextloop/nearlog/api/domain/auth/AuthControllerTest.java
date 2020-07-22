@@ -2,11 +2,13 @@ package com.nextloop.nearlog.api.domain.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nextloop.nearlog.api.domain.user.User;
+import com.nextloop.nearlog.api.domain.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -56,8 +58,7 @@ class AuthControllerTest {
 
     @Test
     void user_sign_in() throws Exception {
-        HashMap<String, String> token = new HashMap<>();
-        token.put("token","this is jwt token");
+        AuthDTO.Response token = AuthDTO.Response.of("token");
         when(authService.signIn(any())).thenReturn(token);
 
         mvc.perform(post("/api/v1/signin")
@@ -65,7 +66,6 @@ class AuthControllerTest {
                 .content("{\"email\":\"bgpark82@gmail.com\", \"password\":\"1234\"}"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.token").exists())
-        ;
+                .andExpect(jsonPath("$.data.token").exists());
     }
 }

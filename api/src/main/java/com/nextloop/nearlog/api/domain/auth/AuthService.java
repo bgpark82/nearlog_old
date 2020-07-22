@@ -24,6 +24,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
 
     public User save(UserDTO.SignUp user) {
         if(userRepository.findByEmail(user.getEmail()).isPresent()){
@@ -33,9 +34,10 @@ public class AuthService {
         return userRepository.save(user.toEntity());
     }
 
-    public Map<String, String> signIn(UserDTO.SignIn user) {
+    public AuthDTO.Response signIn(UserDTO.SignIn user) {
+        Authentication authenticate;
         try {
-            Authentication authenticate = authenticationManager.authenticate(
+            authenticate = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getEmail(),
                             user.getPassword()
@@ -45,9 +47,6 @@ public class AuthService {
             throw new ApiException(ErrorCode.UNAUTHENTICATED);
         }
         // TODO : JWT 생성
-        Map<String, String> map = new HashMap<>();
-        map.put("token","this is jwt token");
-        return map;
-
+        return AuthDTO.Response.of(jwtProvider.generateToken(authenticate));
     }
 }

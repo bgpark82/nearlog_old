@@ -26,11 +26,13 @@ class AuthServiceTest {
     private PasswordEncoder passwordEncoder;
     @Mock
     private AuthenticationManager authenticationManager;
+    @Mock
+    private JwtProvider jwtProvider;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        authService = new AuthService(userRepository, passwordEncoder, authenticationManager);
+        authService = new AuthService(userRepository, passwordEncoder, authenticationManager, jwtProvider);
     }
 
     @Test

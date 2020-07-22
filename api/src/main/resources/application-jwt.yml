@@ -1,2 +1,2 @@
-jwtSecret: letshadow
-expiryHour: 30
+jwt.secret: letshadow
+jwt.expiration: 30
