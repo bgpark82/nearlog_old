@@ -27,5 +27,4 @@ public class AuthController {
     public Response<AuthDTO.Response> signIn(@RequestBody UserDTO.SignIn user) {
         return Response.of(authService.signIn(user));
     }
-
 }
