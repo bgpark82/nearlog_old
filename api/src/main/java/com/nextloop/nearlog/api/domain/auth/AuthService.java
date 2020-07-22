@@ -17,6 +17,9 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     public User save(UserDTO.SignUp user) {
+        if(userRepository.findByEmail(user.getEmail()).isPresent()){
+            throw new ApiException(ErrorCode.USER_EXIST);
+        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user.toEntity());
     }

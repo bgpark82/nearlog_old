@@ -1,5 +1,7 @@
 package com.nextloop.nearlog.api.domain.auth;
 
+import com.nextloop.nearlog.api.domain.user.User;
+import com.nextloop.nearlog.api.domain.user.UserPrincipal;
 import com.nextloop.nearlog.api.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElse(null);
+        User user = userRepository.findByEmail(email).orElse(null);
+        return UserPrincipal.create(user);
     }
 }

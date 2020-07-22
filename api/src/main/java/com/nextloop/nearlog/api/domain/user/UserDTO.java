@@ -3,13 +3,9 @@ package com.nextloop.nearlog.api.domain.user;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 public class UserDTO {
-
-    private final PasswordEncoder passwordEncoder;
 
     @Getter
     @Setter
