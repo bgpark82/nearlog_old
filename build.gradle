@@ -25,13 +25,18 @@ subprojects {
         mavenCentral()
     }
 
+    test {
+        useJUnitPlatform()
+    }
+
     dependencies {
+        compile 'org.springframework.boot:spring-boot-starter-web'
+        testCompile 'org.springframework.boot:spring-boot-starter-test'
         compile 'org.springframework.boot:spring-boot-starter-actuator'
         compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-        compile 'org.springframework.boot:spring-boot-starter-web'
         runtime 'com.h2database:h2'
         compileOnly 'org.projectlombok:lombok'
-        testCompile 'org.springframework.boot:spring-boot-starter-test'
+
 
         // h2 로그 파라미터 값
         implementation "com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.6.1"

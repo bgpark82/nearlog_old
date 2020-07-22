@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    active: local
+
+---
+spring.profiles: local
+
+# h2 설정
+spring.h2.console.enabled: true
+spring.h2.console.settings.web-allow-others: true
+spring.datasource.url: jdbc:h2:mem:testdb
+spring.datasource.driverClassName: org.h2.Driver
+spring.datasource.username: sa
+spring.datasource.password:
+spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+
+# h2 로그 설정
+logging.level.org.hibernate.SQL: debug            # 로그 형식으로 쿼리 보여주기
+spring.jpa.properties.hibernate.format_sql: true  # 압축된 쿼리를 읽기 좋게 포멧
+spring.jpa.hibernate.ddl-auto: create             # 서버 시작에 테이블 생성
+
+---
+spring.profiles: dev
+spring.profiles.include: db
+
+
+spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
