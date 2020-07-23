@@ -15,7 +15,10 @@ public class S3Controller {
 
     @PostMapping("/upload")
     public String upload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
-        return s3Uploader.upload(multipartFile, "static");
+        System.out.println(multipartFile);
+        String result = s3Uploader.upload(multipartFile, "static");
+        System.out.println(result);
+        return "hello from server with data";
     };
 
     @PostMapping("/native")

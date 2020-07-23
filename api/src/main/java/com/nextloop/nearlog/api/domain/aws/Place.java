@@ -10,4 +10,5 @@ public class Place {
     private String message;
     private String latitude;
     private String longitude;
+
 }

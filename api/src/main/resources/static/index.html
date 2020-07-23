@@ -38,8 +38,11 @@
 
     function uploadImage() {
         var file = $('#img')[0].files[0];
+        console.log(file)
         var formData = new FormData();
+        console.log(formData)
         formData.append('data', file);
+        console.log(formData)
 
         $.ajax({
             type: 'POST',
