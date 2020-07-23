@@ -4,8 +4,14 @@ spring:
 
 jwt.secret: test
 jwt.expiration: 30
+
+cloud.aws.s3.bucket: nearlog
+cloud.aws.region.static: ap-northeast-2
+cloud.aws.stack.auto: false
+
 ---
 spring.profiles: local
+spring.profiles.include: aws
 
 # h2 설정
 spring.h2.console.enabled: true
@@ -29,3 +35,5 @@ spring.profiles.include: db
 
 spring.jpa.properties.hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
 
+# s3 iam role 사용
+cloud.aws.credentials.instanceProfile: true
