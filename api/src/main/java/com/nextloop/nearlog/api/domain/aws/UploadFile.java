@@ -8,4 +8,5 @@ import lombok.ToString;
 public class UploadFile {
 
     private String uploadFile;
+    private String type;
 }

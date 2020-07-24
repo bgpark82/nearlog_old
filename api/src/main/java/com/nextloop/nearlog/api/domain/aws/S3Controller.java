@@ -1,5 +1,10 @@
 package com.nextloop.nearlog.api.domain.aws;
 
+import com.nextloop.nearlog.api.domain.exception.ApiException;
+import com.nextloop.nearlog.api.domain.exception.ErrorCode;
+import com.nextloop.nearlog.api.domain.poi.Poi;
+import com.nextloop.nearlog.api.domain.poi.PoiDTO;
+import com.nextloop.nearlog.api.domain.poi.PoiRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.util.ResourceUtils;
@@ -10,11 +15,9 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,7 +25,8 @@ import java.time.LocalDateTime;
 public class S3Controller {
 
     private final S3Uploader s3Uploader;
-
+    private final PoiRepository poiRepository;
+    private final static String tmpdir = System.getProperty("java.io.tmpdir");
 
 
     @PostMapping("/upload")
@@ -34,15 +38,16 @@ public class S3Controller {
     };
 
     @PostMapping("/native")
-    public String upload(@RequestBody Place place) {
-        System.out.println(place);
+    public String upload(@RequestBody Poi poi) {
+        System.out.println(poi);
         return "message from server";
     }
 
+    // TODO : validation 추가
     @PostMapping("/base")
     public String uploadBase64(@RequestBody UploadFile uploadFile) throws IOException {
 
-        // TODO : type에서 확장자 가져오기, naming convenstion 찾기
+        // TODO : type에서 확장자 가져오기, naming convention 찾기
         String name = "image:" + LocalDateTime.now().toString() + ".jpg";
         BufferedImage image;
         byte[] imageByte= Base64.decodeBase64(uploadFile.getUploadFile());
@@ -55,5 +60,31 @@ public class S3Controller {
         File file = ResourceUtils.getFile(name);
         return s3Uploader.upload(file, "static");
 
+    }
+
+
+    @PostMapping("/tmp")
+    public String uploadTmp(@RequestBody PoiDTO.Request poiRequest) throws IOException {
+        String type = poiRequest.getType();
+        String extension = type.substring(type.indexOf('/') + 1);
+        String fileName = UUID.randomUUID().toString() + "." + extension;
+
+        BufferedImage image;
+        byte[] imageByte= Base64.decodeBase64(poiRequest.getImage());
+        try ( ByteArrayInputStream io = new ByteArrayInputStream(imageByte)){
+            image = ImageIO.read(io);
+            int height = image.getHeight();
+            int width = image.getWidth();
+        } catch(Exception e) {
+            throw new ApiException(ErrorCode.FILE_CONVERSION_ERROR);
+        }
+        File file = new File(tmpdir, fileName);
+        ImageIO.write(image, "jpg", file);
+        String uploadFile = s3Uploader.upload(file, "static");
+
+        Poi poi = Poi.of(poiRequest, uploadFile);
+        poiRepository.save(poi);
+
+        return uploadFile;
     }
 }
