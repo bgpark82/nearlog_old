@@ -9,6 +9,9 @@ cloud.aws.s3.bucket: nearlog
 cloud.aws.region.static: ap-northeast-2
 cloud.aws.stack.auto: false
 
+spring.servlet.multipart.max-file-size: 50MB
+spring.servlet.multipart.max-request-size: 50MB
+
 ---
 spring.profiles: local
 spring.profiles.include: aws
