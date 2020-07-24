@@ -7,6 +7,9 @@ import com.nextloop.nearlog.api.domain.exception.ApiException;
 import com.nextloop.nearlog.api.domain.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +36,9 @@ public class S3Uploader {
     }
 
     public String upload(File uploadFile, String dirName) {
-        String fileName = dirName + "/" + uploadFile.getName();
+        DateTime dt = new DateTime();
+        DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy/MM/dd");
+        String fileName = dirName + "/" + fmt.print(dt) + "/" + uploadFile.getName();
         String uploadImageUrl = putS3(uploadFile, fileName);
         removeNewFile(uploadFile);
         return uploadImageUrl;
