@@ -46,8 +46,6 @@ public class S3Controller {
     // TODO : validation 추가
     @PostMapping("/base")
     public String uploadBase64(@RequestBody UploadFile uploadFile) throws IOException {
-
-        // TODO : type에서 확장자 가져오기, naming convention 찾기
         String name = "image:" + LocalDateTime.now().toString() + ".jpg";
         BufferedImage image;
         byte[] imageByte= Base64.decodeBase64(uploadFile.getUploadFile());
@@ -59,10 +57,10 @@ public class S3Controller {
         ImageIO.write(image, "jpg", new File(name));
         File file = ResourceUtils.getFile(name);
         return s3Uploader.upload(file, "static");
-
     }
 
 
+    // TODO : 나중에 마이그레이션
     @PostMapping("/tmp")
     public String uploadTmp(@RequestBody PoiDTO.Request poiRequest) throws IOException {
         String type = poiRequest.getType();
