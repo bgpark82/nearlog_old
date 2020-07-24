@@ -5,6 +5,7 @@ import com.nextloop.nearlog.api.domain.exception.ErrorCode;
 import com.nextloop.nearlog.api.domain.poi.Poi;
 import com.nextloop.nearlog.api.domain.poi.PoiDTO;
 import com.nextloop.nearlog.api.domain.poi.PoiRepository;
+import com.nextloop.nearlog.api.domain.response.Response;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.util.ResourceUtils;
@@ -37,32 +38,10 @@ public class S3Controller {
         return "hello from server with data";
     };
 
-    @PostMapping("/native")
-    public String upload(@RequestBody Poi poi) {
-        System.out.println(poi);
-        return "message from server";
-    }
-
+    // TODO : 리펙토링
     // TODO : validation 추가
-    @PostMapping("/base")
-    public String uploadBase64(@RequestBody UploadFile uploadFile) throws IOException {
-        String name = "image:" + LocalDateTime.now().toString() + ".jpg";
-        BufferedImage image;
-        byte[] imageByte= Base64.decodeBase64(uploadFile.getUploadFile());
-        try ( ByteArrayInputStream io = new ByteArrayInputStream(imageByte)){
-            image = ImageIO.read(io);
-        } catch(Exception e) {
-            return "server error : "+ e;
-        }
-        ImageIO.write(image, "jpg", new File(name));
-        File file = ResourceUtils.getFile(name);
-        return s3Uploader.upload(file, "static");
-    }
-
-
-    // TODO : 나중에 마이그레이션
-    @PostMapping("/tmp")
-    public String uploadTmp(@RequestBody PoiDTO.Request poiRequest) throws IOException {
+    @PostMapping("/image/upload")
+    public Response<Poi> upload(@RequestBody PoiDTO.Request poiRequest) throws IOException {
         String type = poiRequest.getType();
         String extension = type.substring(type.indexOf('/') + 1);
         String fileName = UUID.randomUUID().toString() + "." + extension;
@@ -83,6 +62,6 @@ public class S3Controller {
         Poi poi = Poi.of(poiRequest, uploadFile);
         poiRepository.save(poi);
 
-        return uploadFile;
+        return Response.of(poi);
     }
 }
