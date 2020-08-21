@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,6 @@ public class PoiController {
 
     @GetMapping("/list/{email}")
     public Response<List<Poi>> findAllByUserId(@PathVariable String email) {
-        return Response.of(poiRepository.findAllByUserId(email));
+        return Response.of(poiRepository.findAllByUserIdAndCreatedDateAfter(email, LocalDateTime.now().minusDays(15)));
     }
-
 }
