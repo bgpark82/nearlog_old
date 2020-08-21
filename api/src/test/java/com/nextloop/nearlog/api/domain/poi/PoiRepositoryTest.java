@@ -48,7 +48,7 @@ class PoiRepositoryTest {
         List<Poi> newPoi = repository.findAllByCreatedDateAfter(
                 LocalDateTime.now().minusDays(5));
 
-        assertThat(newPoi.size()).isEqualTo(1);
+        assertThat(newPoi.size()).isEqualTo(2);
     }
 
     @Test
